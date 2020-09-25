@@ -14,7 +14,15 @@ function getShoppingList(recipe_id) {
         .select('i.name', 'ri.quantity');
 }
 
+function getInstructions(recipe_id) {
+    return db('Recipes as r')
+        .join('Instructions as i', 'r.id', 'i.recipe_id')
+        .where('r.id', 'i.recipe_id')
+        .select('i.step', 'i.instruction', 'r.name as RecipeName')
+        .orderBy('r.id')
+}
 module.exports = {
     getRecipes,
     getShoppingList,
+    getInstructions,
 }
