@@ -2,42 +2,39 @@
 exports.up = function (knex) {
     return knex.schema.createTable('Ingredients', tbl => {
         tbl.increments();
-        tbl.string('ingredient_name', 128).notNullable();
-        tbl.string('measurement', 128).notNullable();
-        tbl.varchar('ingredient_image');
+        tbl.string('name', 128).notNullable();
     })
-        .createTable('Instructions', tbl => {
-            tbl.increments();
-            tbl.integer('step_number').notNullable();
-            tbl.string('step_name', 128);
-            tbl.string('step_instructions').notNullable();
-        })
         .createTable('Recipes', tbl => {
             tbl.increments();
-            tbl.string('recipe_name', 128).notNullable().unique();
-            tbl.float('ingredient_qnty');
-            tbl.integer('instructions_id')
-                .unsigned()
-                .notNullable()
-                .references('Instructions.id')
-                .onDelete('CASCADE')
-                .onUpdate('CASCADE');
+            tbl.string('name', 128).notNullable();
         })
-        .createTable('RecipesAndIngredients', tbl => {
+        .createTable('Instructions', tbl => {
+            tbl.increments();
+            tbl.integer('step').notNullable()
+            tbl.string('instruction').notNullable();
             tbl.integer('recipe_id')
                 .unsigned()
                 .notNullable()
                 .references('Recipes.id')
                 .onDelete('CASCADE')
                 .onUpdate('CASCADE');
-            tbl.integer('ingredient_id')
+        })
+        .createTable('RecipesAndIngredients', tbl => {
+            tbl.increments();
+            tbl.integer('recipe_id')
+                .unsigned()
+                .notNullable()
+                .references('Recipes.id')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE');
+            tbl.integer('ingredients_id')
                 .unsigned()
                 .notNullable()
                 .references('Ingredients.id')
                 .onDelete('CASCADE')
                 .onUpdate('CASCADE');
-            tbl.primary(['recipe_id', 'ingredient_id'])
-        })
+            tbl.float('quantity').notNullable();
+        });
 };
 
 exports.down = function (knex) {
