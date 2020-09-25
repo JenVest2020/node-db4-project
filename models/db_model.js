@@ -11,7 +11,7 @@ function getShoppingList(recipe_id) {
         .join('Ingredients as i', 'i.id', ' ri.ingredients_id')
         .join('RecipesAndIngredients as ri', 'ri.id', 'ri.recipe_id')
         .where('r.id', recipe_id)
-    select('i.name', 'ri.quantity');
+        .select('i.name', 'ri.quantity');
 }
 
 module.exports = {
