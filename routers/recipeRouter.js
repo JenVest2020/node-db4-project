@@ -1,10 +1,9 @@
-const { Router, response } = require('express');
 const express = require('express');
 const db = require('../models/db_model');
 
-const rounter = express.Router();
+const router = express.Router();
 
-rounter.get('/', (req, res) => {
+router.get('/', (req, res) => {
     db.getRecipes()
         .then((response) => {
             res.status(200).json(response);
@@ -14,7 +13,7 @@ rounter.get('/', (req, res) => {
         });
 });
 
-Router.get('/:id/shoppingList', (req, res) => {
+router.get('/:id/shoppingList', (req, res) => {
     const { id } = req.params;
     db.getShoppingList(id)
         .then((response) => {
@@ -29,4 +28,4 @@ Router.get('/:id/shoppingList', (req, res) => {
         });
 });
 
-module.exports = rounter;
+module.exports = router;
