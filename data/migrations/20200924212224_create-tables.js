@@ -5,7 +5,6 @@ exports.up = function (knex) {
         tbl.string('ingredient_name', 128).notNullable();
         tbl.string('measurement', 128).notNullable();
         tbl.varchar('ingredient_image');
-        tbl.integer('ingredient_qnty').notNullable();
     })
         .createTable('Instructions', tbl => {
             tbl.increments();
@@ -16,12 +15,7 @@ exports.up = function (knex) {
         .createTable('Recipes', tbl => {
             tbl.increments();
             tbl.string('recipe_name', 128).notNullable().unique();
-            tbl.float('ingredient_qnty')
-                .unsigned()
-                .notNullable()
-                .references('Ingredients.ingredient_qnty')
-                .onDelete('CASCADE')
-                .onUpdate('CASCADE');
+            tbl.float('ingredient_qnty');
             tbl.integer('instructions_id')
                 .unsigned()
                 .notNullable()
