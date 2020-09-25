@@ -11,8 +11,7 @@ function getShoppingList(recipe_id) {
         .join('Ingredients as i', 'i.id', ' ri.ingredients_id')
         .join('RecipesAndIngredients as ri')
         .where('ri.recipe_id', recipe_id)
-        .orderBy('r.id')
-        .select('i.id as IngredientId', 'i.name', 'ri.quantity', 'r.name as RecipeName');
+        .select('i.name', 'ri.quantity');
 }
 
 function getInstructions(recipe_id) {
